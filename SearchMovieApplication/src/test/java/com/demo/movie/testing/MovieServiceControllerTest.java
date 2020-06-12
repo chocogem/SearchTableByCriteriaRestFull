@@ -55,15 +55,15 @@ public class MovieServiceControllerTest {
 			 movie.setGenres(genres2);
 			 movies.add(movie);
 			 
-			 given(movieService.searchMoviesByKeyword("title","Toy")).willReturn(movies);
+			 given(movieService.searchMoviesByKeyword(paramOption,paramKeyword)).willReturn(movies);
    	        
    	        
    	         mockMvc.perform(get("/movies/")
    	        		 .param("option", paramOption)
    	         		 .param("keyword", paramKeyword))
+   	           .andDo(print())
                .andExpect(status().isOk())
-               .andExpect(content().json("[{'movieId': 1,'title':'Toy Story (1995)','version': 1}"
-               		+ ",{'movieId': 2253,'title':'Toys (1992)','version': 1}]"));
+               .andExpect(content().json("[{\"movieId\":\"1\",\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":\"2253\",\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
    		
    		
        	 
@@ -74,11 +74,10 @@ public class MovieServiceControllerTest {
    			e.printStackTrace();
      	}
    	}
-    
     @Test
    	public void test_searchMovieByGenre() {
        	 try {
-       		 Movie movie;
+   		     Movie movie;
        		 String paramOption = "genre";
 	   		 String paramKeyword = "Comedy";
 			 List<Movie> movies = new ArrayList<Movie>();
@@ -98,15 +97,15 @@ public class MovieServiceControllerTest {
 			 movie.setGenres(genres2);
 			 movies.add(movie);
 			 
-			 given(movieService.searchMoviesByKeyword("genre","Comedy")).willReturn(movies);
+			 given(movieService.searchMoviesByKeyword(paramOption,paramKeyword)).willReturn(movies);
    	        
    	        
    	         mockMvc.perform(get("/movies/")
-   	        		 .param("title", paramOption)
+   	        		 .param("option", paramOption)
    	         		 .param("keyword", paramKeyword))
+   	           .andDo(print())
                .andExpect(status().isOk())
-               .andExpect(content().json("[{'movieId': 1,'title':'Toy Story (1995)','version': 1}"
-               		+ ",{'movieId': 2253,'title':'Toys (1992)','version': 1}]"));
+               .andExpect(content().json("[{\"movieId\":\"1\",\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":\"2253\",\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
    		
    		
        	 
@@ -117,7 +116,8 @@ public class MovieServiceControllerTest {
    			e.printStackTrace();
      	}
    	}
-    public static String asJsonString(final Object obj) {
+    
+    static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
