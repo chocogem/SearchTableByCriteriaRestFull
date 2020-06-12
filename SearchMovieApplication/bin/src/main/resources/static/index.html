@@ -1,0 +1,478 @@
+<!doctype html>
+<html>
+<head>
+	<title>Search Reviews</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<style>
+	
+		
+		#reviewIdTextBox {
+		  
+		  background-position: 10px 12px; /* Position the search icon */
+		  background-repeat: no-repeat; /* Do not repeat the icon image */
+		  width: 50%; /* Full-width */
+		  font-size: 16px; /* Increase font-size */
+		  padding: 12px 20px 12px 40px; /* Add some padding */
+		  border: 1px solid #ddd; /* Add a grey border */
+		  margin-bottom: 12px; /* Add some space below the input */
+		}
+		#reviewKeywordTextBox {
+		  
+		  background-position: 10px 12px; /* Position the search icon */
+		  background-repeat: no-repeat; /* Do not repeat the icon image */
+		  width: 50%; /* Full-width */
+		  font-size: 16px; /* Increase font-size */
+		  padding: 12px 20px 12px 40px; /* Add some padding */
+		  border: 1px solid #ddd; /* Add a grey border */
+		  margin-bottom: 12px; /* Add some space below the input */
+		}
+
+		#reviewTable {
+		  border-collapse: collapse; /* Collapse borders */
+		  width: 100%; /* Full-width */
+		  border: 1px solid #ddd; /* Add a grey border */
+		  font-size: 18px; /* Increase font-size */
+		}
+		
+		#reviewTable th, #reviewTable td {
+		  text-align: left; /* Left-align text */
+		  padding: 12px; /* Add padding */
+		}
+		
+		#reviewTable tr {
+		  /* Add a bottom border to all table rows */
+		  border-bottom: 1px solid #ddd;
+		}
+		
+		#reviewTable tr.header, #reviewTable tr:hover {
+		  /* Add a grey background color to the table header and on hover */
+		  background-color: #f1f1f1;
+		}
+		.input-group {
+			margin: 10px 0px 10px 0px;
+		}
+		.input-group label {
+			display: block;
+			text-align: left;
+			margin: 3px;
+		}
+		.input-group input {
+			height: 30px;
+			width: 300px;
+			padding: 5px 10px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: 1px solid gray;
+		}
+		.btn {
+			padding: 10px;
+			font-size: 15px;
+			color: white;
+			background: #5F9EA0;
+			border: none;
+			border-radius: 5px;
+		}
+		
+		
+		
+		* { box-sizing: border-box; }
+			body {
+			  font: 16px Arial;
+			}
+
+			.autocomplete {
+			  /*the container must be positioned relative:*/
+			  position: relative;
+			  display: inline-block;
+			   width: 50%;
+			}
+			.searchId{
+			  /*the container must be positioned relative:*/
+			  position: relative;
+			  display: inline-block;
+			   width: 50%;
+			}
+			searchKeyword{
+			  /*the container must be positioned relative:*/
+			  position: relative;
+			  display: inline-block;
+			   width: 50%;
+			}
+			input {
+			  border: 1px solid transparent;
+			  background-color: #f1f1f1;
+			  padding: 10px;
+			  font-size: 16px;
+			}
+			input[type=text] {
+			  background-color: #f1f1f1;
+			  width: 100%;
+			}
+			input[type=submit] {
+			  background-color: DodgerBlue;
+			  color: #fff;
+			}
+			.autocomplete-items {
+			  position: absolute;
+			  border: 1px solid #d4d4d4;
+			  border-bottom: none;
+			  border-top: none;
+			  z-index: 99;
+			  /*position the autocomplete items to be the same width as the container:*/
+			  top: 100%;
+			  left: 0;
+			  right: 0;
+			}
+			.autocomplete-items div {
+			  padding: 10px;
+			  cursor: pointer;
+			  background-color: #fff;
+			  border-bottom: 1px solid #d4d4d4;
+			}
+			.autocomplete-items div:hover {
+			  /*when hovering an item:*/
+			  background-color: #e9e9e9;
+			}
+			.autocomplete-active {
+			  /*when navigating through the items using the arrow keys:*/
+			  background-color: DodgerBlue !important;
+			  color: #ffffff;
+			}
+			keyword{
+			background-color: #FFFC33;
+			}
+			
+			
+			{box-sizing: border-box;}
+			.open-button {
+			  background-color: #555;
+			  color: white;
+			  padding: 16px 20px;
+			  border: none;
+			  cursor: pointer;
+			  opacity: 0.8;
+			  position: fixed;
+			  bottom: 23px;
+			  right: 28px;
+			  width: 280px;
+			}
+			
+			/* The popup form - hidden by default */
+			.form-popup {
+			  display: none;
+			  position: fixed;
+			  top: 0;
+			  bottom:100;
+			  right: 15px;
+			  border: 3px solid #f1f1f1;
+			  z-index: 9;
+			}
+			
+			/* Add styles to the form container */
+			.form-container {
+			  max-width: 300px;
+			  padding: 10px;
+			  background-color: white;
+			}
+			
+		
+			
+			.form-container .btn {
+			  background-color: #4CAF50;
+			  color: white;
+			  padding: 16px 20px;
+			  border: none;
+			  cursor: pointer;
+			  width: 100%;
+			  margin-bottom:10px;
+			  opacity: 0.8;
+			}
+			
+			/* Add a red background color to the cancel button */
+			.form-container .cancel {
+			  background-color: red;
+			}
+			
+			/* Add some hover effects to buttons */
+			.form-container .btn:hover, .open-button:hover {
+			  opacity: 1;
+			}
+	</style>
+	<script type="text/javascript">
+	
+		$(document).ready(function() {
+			 //var countries = ["strawberry","truffle","pizza","croissant"];
+			
+			//autocomplete(document.getElementById("reviewKeywordTextBox"), countries);
+			$(document).delegate('.searchReviewId', 'click', function() { 
+				var input = document.getElementById("reviewIdTextBox").value;
+				searchByReviewId(input,false);
+				
+			});
+			
+			
+			$(document).delegate('.searchReviewKeyword', 'click', function() { 
+				searchByKeyword();
+				
+			});
+	
+			
+			$("#reviewIdTextBox").keypress(function(event) {
+    			if (event.which == 13) {
+    				var input = document.getElementById("reviewIdTextBox").value;
+    				searchByReviewId(input,false);
+     			}
+			});
+			$("#reviewKeywordTextBox").keypress(function(event) {
+    			if (event.which == 13) {
+    				searchByKeyword();
+     			}
+			});
+		
+		});
+		
+// 			$(document).delegate('#reviewTable tr:not(:first)', 'click', function() {
+// 				var $row = $(this).closest("tr"),        
+// 			    $tds = $row.find("td:nth-child(2)");
+// 				var selectreview = $tds[0].innerText.replace('<keyword>','').replace('</keyword>','');
+// 			});
+			$(document).delegate('.edit', 'click', function() {
+				var parent = $(this).parent().parent();
+				var id = parent.children("td:nth-child(1)")[0].innerText;
+				var review = parent.children("td:nth-child(2)")[0].innerText.replace('<keyword>','').replace('</keyword>','');
+				var version = parent.children("td:nth-child(3)")[0].innerText;
+				openForm(id,review,version);
+			});
+			
+			$(document).delegate('.okedit', 'click', function() {
+				  var editidtext = document.getElementById("editid");
+				  var versiontext = document.getElementById("version");
+				  var rid = editidtext.innerHTML.replace('Review ID:','');
+				  var editingtext = document.getElementById("editingtext").value;
+				  var version = versiontext.innerHTML;
+				  var reviewtext = editingtext.value;
+				 
+				  var d = "2020-05-28 00:00:00";
+				  $.ajax({
+
+				    "async": true,
+				    "crossDomain": true,
+				    "url": "http://localhost:5555/reviews/"+rid,
+				    "method": "PUT",
+				    "headers": {
+				      "content-type": "application/json",
+				    },
+				    "processData": false,
+				    "data":JSON.stringify({ review: editingtext, reviewID: rid ,version : version}),
+				    "success": function(xhr) {
+				    	
+						alert('Update successfully');
+						closeForm();
+						searchByReviewId(rid,true);
+						},
+					error: function(xhr) {
+						if(xhr.status == 409){
+							var input = document.getElementById("reviewIdTextBox").value;
+							 var r = confirm("Cannot update data,This review has been modified by other user.\n Do you want to reload last modified?");
+							  if (r == true) {
+								  searchByReviewId(rid,true);
+							  } else{
+								  closeForm();
+							  }
+							
+						}else{
+							alert('Error updating record');
+						}
+					}
+				  });
+			});
+		
+
+		
+		function searchByKeyword(){
+			input = document.getElementById("reviewKeywordTextBox").value;
+			$.getJSON('http://localhost:5555/reviews?query='+input, function(json) {
+				var tr=[];
+				$('#reviewTable tr:not(:first)').remove();
+
+				for (var i = 0; i < json.length; i++) {
+					tr.push('<tr>');
+					tr.push('<td>' + json[i].reviewID + '</td>');
+					tr.push('<td>' + json[i].review + '</td>');
+					tr.push('<td style="display:none;" >' + json[i].version + '</td>');
+					tr.push('<td><button class=\'edit\'style="width:100px;" type=\'button\'>Edit</button></td>');
+					tr.push('</tr>');
+				}
+				$('table').append($(tr.join('')));
+			});
+		}
+
+		function searchByReviewId(input,fromEdit){
+			
+			$.getJSON('http://localhost:5555/reviews/'+input, function(json) {
+				var tr=[];
+				$('#reviewTable tr:not(:first)').remove();
+				tr.push('<tr>');
+				tr.push('<td>' + json.reviewID + '</td>');
+				tr.push('<td>' + json.review + '</td>');
+				tr.push('<td style="display:none;" >' + json.version + '</td>');
+				tr.push('<td><button class=\'edit\' style="width:100px;" type=\'button\' >Edit</button></td>');
+				tr.push('</tr>');
+
+				$('table').append($(tr.join('')));
+				if(fromEdit&&document.getElementById("myForm").style.display=="block"){
+					var editingtext = document.getElementById("editingtext");
+					  editingtext.value = json.review;
+					  document.getElementById("version").innerHTML = json.version;
+				}
+			});
+		}
+		function autocomplete(inp, arr) {
+			  /*the autocomplete function takes two arguments,
+			  the text field element and an array of possible autocompleted values:*/
+			  var currentFocus;
+			  /*execute a function when someone writes in the text field:*/
+			  inp.addEventListener("input", function(e) {
+			      var a, b, i, val = this.value;
+			      /*close any already open lists of autocompleted values*/
+			      closeAllLists();
+			      if (!val) { return false;}
+			      currentFocus = -1;
+			      /*create a DIV element that will contain the items (values):*/
+			      a = document.createElement("DIV");
+			      a.setAttribute("id", this.id + "autocomplete-list");
+			      a.setAttribute("class", "autocomplete-items");
+			      /*append the DIV element as a child of the autocomplete container:*/
+			      this.parentNode.appendChild(a);
+			      /*for each item in the array...*/
+			      for (i = 0; i < arr.length; i++) {
+			        /*check if the item starts with the same letters as the text field value:*/
+			        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+			          /*create a DIV element for each matching element:*/
+			          b = document.createElement("DIV");
+			          /*make the matching letters bold:*/
+			          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+			          b.innerHTML += arr[i].substr(val.length);
+			          /*insert a input field that will hold the current array item's value:*/
+			          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+			          /*execute a function when someone clicks on the item value (DIV element):*/
+			              b.addEventListener("click", function(e) {
+			              /*insert the value for the autocomplete text field:*/
+			              inp.value = this.getElementsByTagName("input")[0].value;
+			              /*close the list of autocompleted values,
+			              (or any other open lists of autocompleted values:*/
+			              closeAllLists();
+			          });
+			          a.appendChild(b);
+			        }
+			      }
+			  });
+			  /*execute a function presses a key on the keyboard:*/
+			  inp.addEventListener("keydown", function(e) {
+			      var x = document.getElementById(this.id + "autocomplete-list");
+			      if (x) x = x.getElementsByTagName("div");
+			      if (e.keyCode == 40) {
+			        /*If the arrow DOWN key is pressed,
+			        increase the currentFocus variable:*/
+			        currentFocus++;
+			        /*and and make the current item more visible:*/
+			        addActive(x);
+			       } else if (e.keyCode == 38) { //up
+			        /*If the arrow UP key is pressed,
+			        decrease the currentFocus variable:*/
+			        currentFocus--;
+			        /*and and make the current item more visible:*/
+			        addActive(x);
+			       } else if (e.keyCode == 13) {
+			    	  searchByKeyword();
+			       } 
+			      
+			  });
+			  function addActive(x) {
+			    /*a function to classify an item as "active":*/
+			    if (!x) return false;
+			    /*start by removing the "active" class on all items:*/
+			    removeActive(x);
+			    if (currentFocus >= x.length) currentFocus = 0;
+			    if (currentFocus < 0) currentFocus = (x.length - 1);
+			    /*add class "autocomplete-active":*/
+			    x[currentFocus].classList.add("autocomplete-active");
+			  }
+			  function removeActive(x) {
+			    /*a function to remove the "active" class from all autocomplete items:*/
+			    for (var i = 0; i < x.length; i++) {
+			      x[i].classList.remove("autocomplete-active");
+			    }
+			  }
+			  function closeAllLists(elmnt) {
+			    /*close all autocomplete lists in the document,
+			    except the one passed as an argument:*/
+			    var x = document.getElementsByClassName("autocomplete-items");
+			    for (var i = 0; i < x.length; i++) {
+			      if (elmnt != x[i] && elmnt != inp) {
+			      x[i].parentNode.removeChild(x[i]);
+			    }
+			  }
+			}
+			/*execute a function when someone clicks in the document:*/
+			document.addEventListener("click", function (e) {
+			    closeAllLists(e.target);
+			});
+			}
+		
+			function openForm(id,review,version) {
+			  var versionText = document.getElementById("version");
+			  versionText.innerHTML = version;
+			  var editidtext = document.getElementById("editid");
+			  editidtext.innerHTML = 'Review ID:'+id;
+			  var editingtext = document.getElementById("editingtext");
+			  editingtext.value = review;
+			  document.getElementById("myForm").style.display = "block";
+			  
+			}
+
+			function closeForm() {
+			  document.getElementById("myForm").style.display = "none";
+			}
+	</script>
+</head>
+<body>
+<h2>Search Reviews</h2>
+
+  <div class="searchId" >
+    <input autocomplete="off" id="reviewIdTextBox" type="text"  placeholder="Search by Review ID..">
+    <button class="searchReviewId" type="button" >Search</button>
+  </div>
+  
+
+<!--   <div class="autocomplete" > -->
+  <div class=searchReview >
+    <input autocomplete="off" id="reviewKeywordTextBox" type="text"  placeholder="Search by keyword..">
+    <button class="searchReviewKeyword" type="button" >Search</button>
+  </div>
+  
+
+<table id="reviewTable" style="width:100%;">
+  <tr class="header">
+    <th style="width:10%;">ReviewID</th>
+    <th style="width:80%;">Review</th>
+    <th style="width:10%;">Action</th>
+  </tr>
+</table>
+	
+<div class="form-popup" id="myForm">
+  <form  class="form-container">
+    <h1>Edit Review</h1>
+
+    <div id="editid" >Review ID :</div>
+    <div id="version" style="display:none;" ></div>
+    <textarea type="text" id="editingtext" style="width:250px;height:150px;" ></textarea>
+
+
+    <button type="button" class="okedit">Save</button>
+    <button type="button" class="canceledit" onclick="closeForm()">Dismiss</button>
+  </form>
+</div>
+</body>
+</html>
