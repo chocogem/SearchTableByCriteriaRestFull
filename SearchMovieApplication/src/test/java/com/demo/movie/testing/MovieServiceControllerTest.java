@@ -65,9 +65,6 @@ public class MovieServiceControllerTest {
                .andExpect(status().isOk())
                .andExpect(content().json("[{\"movieId\":\"1\",\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":\"2253\",\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
    		
-   		
-       	 
-       	 
        	 
        	 } catch (Exception e) {
    			// TODO Auto-generated catch block

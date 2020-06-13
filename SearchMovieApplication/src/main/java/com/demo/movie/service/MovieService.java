@@ -41,13 +41,13 @@ public class MovieService {
 			}else {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 			}
-			if(moviesResponse.size()==0) {
-				 throw  new ResponseStatusException(HttpStatus.NO_CONTENT);
-			 }
+			
 			return moviesResponse;
 		} 
 	
-		
+		public List<Movie> getAllMovie(){
+		      return movieRepository.findAll();
+		} 
 		
 	
 	

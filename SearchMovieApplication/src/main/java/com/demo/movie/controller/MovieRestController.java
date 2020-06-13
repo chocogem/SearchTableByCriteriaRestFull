@@ -28,7 +28,11 @@ public class MovieRestController {
 		return movieService.searchMoviesByKeyword(option, keyword);
 		
 	}
-	
+	@RequestMapping(value = "/allmovie", method = RequestMethod.GET)
+	public List<Movie> getAllMovie() {
+		return movieService.getAllMovie();
+		
+	}
 	
 	
 }
