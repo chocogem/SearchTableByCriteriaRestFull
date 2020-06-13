@@ -44,7 +44,7 @@ public class MovieServiceDataMongoTest {
 		public void test_searchReviewByTitle(){
 			 Movie movie;
        		 String paramOption = "title";
-	   		 String paramKeyword = "Story";
+	   		 String paramKeyword = "Toy";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
 			 movie.setMovieId("1");
