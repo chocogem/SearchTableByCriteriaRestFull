@@ -1,4 +1,4 @@
-# harryandhismovierentalstore
+# Harry and his movie rental store
 
 Web application & Restful API for search movies by title/Genre.
 
