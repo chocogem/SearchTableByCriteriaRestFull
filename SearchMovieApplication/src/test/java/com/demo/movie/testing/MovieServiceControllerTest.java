@@ -71,6 +71,8 @@ public class MovieServiceControllerTest {
    			e.printStackTrace();
      	}
    	}
+    
+   
     @Test
    	public void test_searchMovieByGenre() {
        	 try {
@@ -114,13 +116,108 @@ public class MovieServiceControllerTest {
      	}
    	}
     
-    static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-	
+    @Test
+   	public void test_searchInvalidNoOption() {
+       	 try {
+   		     Movie movie;
+       		 String paramOption = "title";
+	   		 String paramKeyword = "Story";
+			 List<Movie> movies = new ArrayList<Movie>();
+			 movie = new Movie();
+			 movie.setMovieId("1");
+			 movie.setTitle("Toy Story (1995)");
+			 movie.setVersion(1L);
+			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
+			 movie.setGenres(genres1);
+			 movies.add(movie);
+			 
+			 movie = new Movie();
+			 movie.setMovieId("2253");
+			 movie.setTitle("Toys (1992)");
+			 movie.setVersion(1L);
+			 String[] genres2 = {"Comedy","Fantasy"};
+			 movie.setGenres(genres2);
+			 movies.add(movie);
+			 
+			 given(movieService.searchMoviesByKeyword(paramOption,paramKeyword)).willReturn(movies);
+   	        
+   	        
+   	         mockMvc.perform(get("/movies/")
+   	         		 .param("keyword", paramKeyword))
+               .andExpect(status().isBadRequest());
+       	 
+       	 } catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+     	}
+   	}
+    @Test
+   	public void test_searchInvalidNoKeyword() {
+       	 try {
+   		     Movie movie;
+       		 String paramOption = "title";
+	   		 String paramKeyword = "Story";
+			 List<Movie> movies = new ArrayList<Movie>();
+			 movie = new Movie();
+			 movie.setMovieId("1");
+			 movie.setTitle("Toy Story (1995)");
+			 movie.setVersion(1L);
+			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
+			 movie.setGenres(genres1);
+			 movies.add(movie);
+			 
+			 movie = new Movie();
+			 movie.setMovieId("2253");
+			 movie.setTitle("Toys (1992)");
+			 movie.setVersion(1L);
+			 String[] genres2 = {"Comedy","Fantasy"};
+			 movie.setGenres(genres2);
+			 movies.add(movie);
+			 
+			 given(movieService.searchMoviesByKeyword(paramOption,paramKeyword)).willReturn(movies);
+   	        
+   	        
+   	         mockMvc.perform(get("/movies/")
+   	         		 .param("option", paramOption))
+               .andExpect(status().isBadRequest());
+       	 
+       	 } catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+     	}
+   	}
+    @Test
+   	public void test_searchInvalidNoParam() {
+       	 try {
+   		     Movie movie;
+       		 String paramOption = "title";
+	   		 String paramKeyword = "Story";
+			 List<Movie> movies = new ArrayList<Movie>();
+			 movie = new Movie();
+			 movie.setMovieId("1");
+			 movie.setTitle("Toy Story (1995)");
+			 movie.setVersion(1L);
+			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
+			 movie.setGenres(genres1);
+			 movies.add(movie);
+			 
+			 movie = new Movie();
+			 movie.setMovieId("2253");
+			 movie.setTitle("Toys (1992)");
+			 movie.setVersion(1L);
+			 String[] genres2 = {"Comedy","Fantasy"};
+			 movie.setGenres(genres2);
+			 movies.add(movie);
+			 
+			 given(movieService.searchMoviesByKeyword(paramOption,paramKeyword)).willReturn(movies);
+   	        
+   	        
+   	         mockMvc.perform(get("/movies/"))
+               .andExpect(status().isBadRequest());
+       	 
+       	 } catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+     	}
+   	}
 }

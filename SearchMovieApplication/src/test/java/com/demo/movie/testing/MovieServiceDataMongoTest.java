@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.demo.movie.entities.Movie;
@@ -27,11 +26,9 @@ public class MovieServiceDataMongoTest {
 		private MovieService movieService;
 		@Autowired 
 		MovieRepository movieRepository;
-		@Autowired
-		private MongoTemplate mongoTemplate;
 		@Before
 	    public void setUp() {
-			movieService = new MovieService(movieRepository,mongoTemplate);
+			movieService = new MovieService(movieRepository);
 			movieRepository.deleteAll();
 			
 	    }
@@ -66,7 +63,14 @@ public class MovieServiceDataMongoTest {
 			 Assert.assertEquals(2, expected.size());
 		} 
 		
-		
+		@Test
+		public void test_searchReviewByTitleNotFound(){
+       		 String paramOption = "title";
+	   		 String paramKeyword = "Toy";
+			 List<Movie> expected = movieService.searchMoviesByKeyword(paramOption,paramKeyword);
+			 Assert.assertNotNull(expected);
+			 Assert.assertEquals(0, expected.size());
+		} 
 		@Test
 		public void test_searchReviewByGenre(){
 			 Movie movie;
@@ -93,7 +97,14 @@ public class MovieServiceDataMongoTest {
 			 Assert.assertEquals(2, expected.size());
 		} 
 		
-		
+		@Test
+		public void test_searchReviewByGenreNotFound(){
+       		 String paramOption = "genre";
+	   		 String paramKeyword = "Comedy";
+			 List<Movie> expected = movieService.searchMoviesByKeyword(paramOption,paramKeyword);
+			 Assert.assertNotNull(expected);
+			 Assert.assertEquals(0, expected.size());
+		} 
 		
 	
 }
