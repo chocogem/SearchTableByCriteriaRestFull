@@ -20,6 +20,7 @@ Restful API
 * Spring boot
 * Docker
 * MongoDb
+* HTML,jQurey,Ajax,Bootstrap,paginationjs
 
 ## Authors
 
