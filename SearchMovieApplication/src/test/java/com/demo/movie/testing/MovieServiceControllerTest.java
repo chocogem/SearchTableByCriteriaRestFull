@@ -40,7 +40,7 @@ public class MovieServiceControllerTest {
 	   		 String paramKeyword = "Story";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 movie.setVersion(1L);
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
@@ -48,7 +48,7 @@ public class MovieServiceControllerTest {
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 movie.setVersion(1L);
 			 String[] genres2 = {"Comedy","Fantasy"};
@@ -63,7 +63,7 @@ public class MovieServiceControllerTest {
    	         		 .param("keyword", paramKeyword))
    	           .andDo(print())
                .andExpect(status().isOk())
-               .andExpect(content().json("[{\"movieId\":\"1\",\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":\"2253\",\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
+               .andExpect(content().json("[{\"movieId\":1,\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":2253,\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
    		
        	 
        	 } catch (Exception e) {
@@ -81,7 +81,7 @@ public class MovieServiceControllerTest {
 	   		 String paramKeyword = "Comedy";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 movie.setVersion(1L);
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
@@ -89,7 +89,7 @@ public class MovieServiceControllerTest {
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 movie.setVersion(1L);
 			 String[] genres2 = {"Comedy","Fantasy"};
@@ -104,7 +104,7 @@ public class MovieServiceControllerTest {
    	         		 .param("keyword", paramKeyword))
    	           .andDo(print())
                .andExpect(status().isOk())
-               .andExpect(content().json("[{\"movieId\":\"1\",\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":\"2253\",\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
+               .andExpect(content().json("[{\"movieId\":1,\"title\":\"Toy Story (1995)\",\"genres\":[\"Adventure\",\"Animation\",\"Children\",\"Comedy\",\"Fantasy\"],\"version\":1},{\"movieId\":2253,\"title\":\"Toys (1992)\",\"genres\":[\"Comedy\",\"Fantasy\"],\"version\":1}]"));
    		
    		
        	 
@@ -124,7 +124,7 @@ public class MovieServiceControllerTest {
 	   		 String paramKeyword = "Story";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 movie.setVersion(1L);
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
@@ -132,7 +132,7 @@ public class MovieServiceControllerTest {
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 movie.setVersion(1L);
 			 String[] genres2 = {"Comedy","Fantasy"};
@@ -159,7 +159,7 @@ public class MovieServiceControllerTest {
 	   		 String paramKeyword = "Story";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 movie.setVersion(1L);
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
@@ -167,7 +167,7 @@ public class MovieServiceControllerTest {
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 movie.setVersion(1L);
 			 String[] genres2 = {"Comedy","Fantasy"};
@@ -194,7 +194,7 @@ public class MovieServiceControllerTest {
 	   		 String paramKeyword = "Story";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 movie.setVersion(1L);
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
@@ -202,7 +202,7 @@ public class MovieServiceControllerTest {
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 movie.setVersion(1L);
 			 String[] genres2 = {"Comedy","Fantasy"};

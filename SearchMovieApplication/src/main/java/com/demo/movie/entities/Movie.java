@@ -2,27 +2,24 @@ package com.demo.movie.entities;
 
 
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document
 public class Movie {
 
 	@Id
-	private String movieId;
+	private Integer movieId;
 	private String title;
 	private String[] genres;
 	@Version
 	private Long version;
-	public String getMovieId() {
+	
+	public Integer getMovieId() {
 		return movieId;
 	}
-	public void setMovieId(String movieId) {
+	public void setMovieId(Integer movieId) {
 		this.movieId = movieId;
 	}
 	public String getTitle() {

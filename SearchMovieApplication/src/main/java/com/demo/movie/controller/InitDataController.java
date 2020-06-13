@@ -45,7 +45,7 @@ public class InitDataController {
 		    		  readLine = sc.nextLine();
 		    		  String[] reads= readLine.split(delimiter, 3);
 		    		  movie = new Movie();
-		    		  movie.setMovieId(reads[0]);
+		    		  movie.setMovieId(Integer.parseInt(reads[0]));
 		    		  movie.setTitle(reads[1]);
 		    		  genres = reads[2].split(delimiterGenres);
 		    		  movie.setGenres(genres);

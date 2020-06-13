@@ -44,14 +44,14 @@ public class MovieServiceDataMongoTest {
 	   		 String paramKeyword = "Toy";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
 			 movie.setGenres(genres1);
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 String[] genres2 = {"Comedy","Fantasy"};
 			 movie.setGenres(genres2);
@@ -78,14 +78,14 @@ public class MovieServiceDataMongoTest {
 	   		 String paramKeyword = "Comedy";
 			 List<Movie> movies = new ArrayList<Movie>();
 			 movie = new Movie();
-			 movie.setMovieId("1");
+			 movie.setMovieId(1);
 			 movie.setTitle("Toy Story (1995)");
 			 String[] genres1 = {"Adventure","Animation","Children","Comedy","Fantasy"};
 			 movie.setGenres(genres1);
 			 movies.add(movie);
 			 
 			 movie = new Movie();
-			 movie.setMovieId("2253");
+			 movie.setMovieId(2253);
 			 movie.setTitle("Toys (1992)");
 			 String[] genres2 = {"Comedy","Fantasy"};
 			 movie.setGenres(genres2);
