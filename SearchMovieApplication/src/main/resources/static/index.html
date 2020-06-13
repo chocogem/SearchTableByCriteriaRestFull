@@ -4,14 +4,14 @@
 	<title>Harry Movie Rental Store</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.7/pagination.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.7/pagination.css">
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.7/pagination.js"></script>
 	<style>
 		.headerPage {
-		  padding: 15px;
+		  padding: 10px;
 		  text-align: left;
 		  color: blue;
 		  font-size: 30px;
@@ -227,7 +227,7 @@
 				  list-style: none;
 				}
 			.paginationjs{
-				margin-inline-start: 1052px
+				margin-inline-start: 1065px
 			}
 				
 	</style>
@@ -236,6 +236,28 @@
 		var limit = 10;
 		$(document).ready(function() {
 			
+			getAllData();
+			
+		  	$("#modalNotFound").on('hide.bs.modal', function(){
+				document.getElementById("movieTitleTextBox").value="";
+				document.getElementById("movieGenreTextBox").value="";
+				getAllData();
+		 	 });
+		
+			
+			$(document).delegate('.searchMovieTitle', 'click', function() { 
+				var input = document.getElementById("movieTitleTextBox").value;
+				searchByKeyword("title",input);
+				
+			});
+			$(document).delegate('.searchMovieGenre', 'click', function() { 
+				var input = document.getElementById("movieGenreTextBox").value;
+				searchByKeyword("genre",input);
+				
+			});
+			
+		});
+		function getAllData(){
 			var titles = [];
 			var genres = [];
 			
@@ -278,39 +300,7 @@
 			    	}
 				}
 			  });
-			
-			
-		
-			
-			$(document).delegate('.searchMovieTitle', 'click', function() { 
-				var input = document.getElementById("movieTitleTextBox").value;
-				searchByKeyword("title",input);
-				
-			});
-			$(document).delegate('.searchMovieGenre', 'click', function() { 
-				var input = document.getElementById("movieGenreTextBox").value;
-				searchByKeyword("genre",input);
-				
-			});
-	
-	
-			/* $("#movieTitleTextBox").keypress(function(event) {
-    			if (event.which == 13) {
-    				var input = document.getElementById("movieTitleTextBox").value;
-    				searchByKeyword("title",input);
-     			
-     			}
-			});
-		
-			$("#movieGenreTextBox").keypress(function(event) {
-    			if (event.which == 13) {
-    				var input = document.getElementById("movieGenreTextBox").value;
-    				searchByKeyword("genre",input);
-     			}
-			}); */
-		
-		});
-		
+		}
 		function setPagination(json){
 			$('#pagination-bar').pagination({
 			    dataSource:json,
@@ -331,8 +321,16 @@
 							
 						}
 						$('table').append($(tr.join('')));
+						
+						
+						
 			    }
 			})
+			if(json.length<=limit){
+				document.getElementById("wrapper").style.display = "none";
+			}else{
+				document.getElementById("wrapper").style.display = "block";
+			}
 		}
 			
 		
@@ -350,13 +348,13 @@
 			    "success": function(json) {
 			    	if(json !=null){
 			    		var tr=[];
-						$('#movieTable tr:not(:first)').remove();
+			    		$('#movieTable tr:not(:first)').remove();
 						if(json.length==0){
-							$("#modalNotFound").modal()
-							document.getElementById("wrapper").style.display = "none";
+							$("#modalNotFound").modal("show")
+					  		document.getElementById("wrapper").style.display = "none";
 						}else{
 							setPagination(json);
-							document.getElementById("wrapper").style.display = "block";
+							
 							
 						}
 			    	}
@@ -370,7 +368,6 @@
 			
 		}
 
-	
 		function autocomplete(inp, arr) {
 			  /*the autocomplete function takes two arguments,
 			  the text field element and an array of possible autocompleted values:*/
@@ -506,6 +503,7 @@
         <div id="pagination-bar"></div>
     </section>
 </div>
+
 <div class="container">
 
   <!-- Modal -->
@@ -516,11 +514,16 @@
       <div class="modal-content">
        
         <div class="modal-body">
-          <p>Sorry,no result found</p>
+          <p>Sorry,data not found</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="close" data-dismiss="modal">Close</button>
         </div>
       </div>
+      
+    </div>
+  </div> 
+</div>
+ 
 </body>
 </html>
