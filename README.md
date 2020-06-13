@@ -2,6 +2,8 @@
 
 Web application & Restful API for search movies by title/Genre.
 
+[![app-img.gif](https://i.postimg.cc/HWJh4rD9/app-img.gif)](https://postimg.cc/vDshGHm4)
+
 ## API Document
 Restful API
 
