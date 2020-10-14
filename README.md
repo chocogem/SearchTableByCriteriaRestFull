@@ -1,4 +1,4 @@
-# Harry and his movie rental store
+# Search movie application
 
 Web application & Restful API for search movies by title/Genre.
 
